@@ -5,6 +5,7 @@ library("gutenbergr")
 library("dplyr")
 library("tidytext")
 library("stringr")
+library("stringi")
 
 works <- gutenberg_works()
 
@@ -21,7 +22,7 @@ lines_to_sentences <- function(lines_data) {
 
 ## Downloading and reshaping some of the dataset
 ids <- list(
-  "keats" = author_works("Keats, John"),
+  "keats" = author_works("Whitman, Walt"),
   "wordsworth" = author_works("Wordsworth, William")
 )
 
@@ -39,8 +40,10 @@ sentences <- rbind(
 sentences$sentence <- gsub("[[:punct:]]+","", sentences$sentence)
 sentences$sentence <- gsub("\\s+", " ", str_trim(sentences$sentence))
 sentences <- sentences %>%
+  ungroup() %>%
   filter(!grepl("footnote", sentence)) %>%
   mutate(n_words = str_count(sentence, " ") + 1) %>%
-  filter(n_words > 5)
+  filter(n_words > 5) %>%
+  arrange(desc(n_words))
 
 write.csv(sentences, file = "sentences.csv", row.names = FALSE)
