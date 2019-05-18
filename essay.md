@@ -46,3 +46,34 @@ file scalled `sentences.csv`.
 
 We can run it from the command line using `R sentences.R` -- in a pipeline, this
 would be put in some shell script.
+
+## Geometric Views: Before Training
+
+AI can often be usefully thought of in geometric terms. Classification is only
+possible because one class lives in a different region of a geometric
+representation space than another (and when it's impossible, it's because the
+classes are all mixed up in the same place).
+
+It's not at all obvious how we can convert something like a sentence into
+something geometrically meaningful. We'll reflect on this issue, before diving
+more deeply into training classification models.
+
+Historically, one of the first ways people in ML tried geometrically
+representing sentences was to convert them into their "bag-of-words". The idea
+is to just count the occurrences of the most common (say, 5000 most frequenty)
+words. You can then summarize a sentence by a length 5000 vector giving these
+frequencies (most of these will be zero), and vectors can be visualized
+geometrically.
+
+This is pretty obviously not a satisfying solution -- no one understand a
+document by looking at the jumbled up words! An alternative idea is to consider
+one-hot encodings of each word. The first word in the vocabulary is (1, 0,
+0,...), the second is (0, 1, 0, 0, 0), and so on. You can imagine these words as
+being "corners" of the positive half of a very high-dimensional star (try
+drawing the representations in the case of a vocabulary of size three: (1, 0,
+0), (0, 1, 0), and (0, 0, 1)).
+
+
+Then, a sentence can be thought of geometrically as a directed curve between the
+corners of this star. Visualizing things in very high dimension is tricky, but
+the figure below gives some intuition about what we should expect.
