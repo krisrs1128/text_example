@@ -33,11 +33,3 @@ for epoch in range(n_epochs):
 
     torch.save(model.state_dict(), 'tut2-{}-model.pt'.format(epoch))
     print("\tTrain Loss: {}".format(train_loss))
-
-for epoch in range(n_epochs):
-    start_time = time.time()
-    train_loss = train(model, train_iter, optimizer, criterion)
-    end_time = time.time()
-
-    torch.save(model.state_dict(), 'tut2-{}-model.pt'.format(epoch))
-    print("\tTrain Loss: {}".format(train_loss))
