@@ -35,7 +35,6 @@ class RNN(nn.Module):
         super().__init__()
         self.num_layers = num_layers
         self.hidden_dim = hidden_dim
-        self.batch_size = 32
 
         # GRU cell definition
         self.rnn = nn.GRU(
