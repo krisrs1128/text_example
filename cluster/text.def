@@ -7,9 +7,8 @@ From: ubuntu:18.04
 #
 # Note that this recipe can only be built on a machine where you are root, the
 # build command is
-# sudo singularity build singularity.sif singularity.def
-# scp singularity.* mila:/network/tmp1/sankarak/images/
-# scp singularity.* beluga:/scratch/sankarak/images/
+# sudo singularity build text.sif text.def
+# scp text.* beluga:/scratch/sankarak/images/
 
 %post
     apt -y update
