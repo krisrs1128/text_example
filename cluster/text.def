@@ -1,0 +1,34 @@
+BootStrap: docker
+From: ubuntu:18.04
+
+# To run in this shell pointing to the data in /data/, you can execute
+# singularity shell -B /network/tmp1/sankarak/data/:data superresolution.sif
+# from inside the Mila cluster
+#
+# Note that this recipe can only be built on a machine where you are root, the
+# build command is
+# sudo singularity build text.img text.def
+# scp text.* beluga:/scratch/sankarak/images/
+
+%post
+    apt -y update
+    apt -y upgrade
+    apt -y install software-properties-common
+    apt -y install vim unzip wget sudo
+    apt -y install r-base
+    apt -y install build-essential libssl-dev libffi-dev python3-dev
+    apt -y install python3-pip python3-tk
+    pip3 install numpy spacy pandas
+    pip3 install --no-cache-dir torch torchtext matplotlib ipython
+    python3 -m spacy download en
+    Rscript -e "install.packages('dplyr')"
+    Rscript -e "install.packages('ggplot2')"
+    Rscript -e "install.packages('gutenberg')"
+    Rscript -e "install.packages('reshape2')"
+    Rscript -e "install.packages('stringi')"
+    Rscript -e "install.packages('stringr')"
+    Rscript -e "install.packages('tidytext')"
+
+%environment
+
+%runscript
