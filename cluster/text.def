@@ -7,7 +7,7 @@ From: ubuntu:18.04
 #
 # Note that this recipe can only be built on a machine where you are root, the
 # build command is
-# sudo singularity build text.sif text.def
+# sudo singularity build text.img text.def
 # scp text.* beluga:/scratch/sankarak/images/
 
 %post
