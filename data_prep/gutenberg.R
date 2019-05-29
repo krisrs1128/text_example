@@ -22,7 +22,7 @@ lines_to_sentences <- function(lines_data) {
 
 ## Downloading and reshaping some of the dataset
 ids <- list(
-  "keats" = author_works("Whitman, Walt"),
+  "keats" = author_works("Keats, John"),
   "wordsworth" = author_works("Wordsworth, William")
 )
 
