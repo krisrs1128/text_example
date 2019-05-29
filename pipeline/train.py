@@ -34,7 +34,7 @@ def train(model, iterator, optimizer, loss_fun, embedding, device):
         y = elem.author.float().to(device)
 
         _, _, y_hat = model(x)
-        loss = criterion(y_hat.squeeze(1), y)
+        loss = loss_fun(y_hat.squeeze(1), y)
 
         loss.backward()
         optimizer.step()

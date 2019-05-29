@@ -54,4 +54,4 @@ sentences <- sentences %>%
   filter(n_words > 5) %>%
   arrange(desc(n_words))
 
-write.csv(sentences, file = "sentences.csv", row.names = FALSE)
+write.csv(sentences, file = "/data/sentences.csv", row.names = FALSE)
