@@ -10,10 +10,11 @@ classification task on it (is the author wordsworth or keats?). The main steps a
     - Train the model
     - Evaluate the errors
 """
-from pipeline.model import train, RNN
+from data_prop.vocab import build_vocab
+from pipeline.model import RNN
+from pipeline.train import train
 from torch import nn
 from torchtext import data
-from data_prop.vocab import build_vocab
 import torch
 
 # Parameters related to data

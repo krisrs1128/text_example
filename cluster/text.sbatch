@@ -21,4 +21,5 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=sankaran.kris@gmail.com
 
-singularity shell --nv --bind /scratch/sankarak/data:data,/home/sankarak/text_example:/home /scratch/sankarak/images/text.sif /home/cluster/main.sh
+module load singularity
+singularity shell --nv --bind /scratch/sankarak/data:data,/home/sankarak/text_example:/home /scratch/sankarak/images/text.img /home/cluster/main.sh

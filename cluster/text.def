@@ -23,7 +23,7 @@ From: ubuntu:18.04
     python3 -m spacy download en
     Rscript -e "install.packages('dplyr')"
     Rscript -e "install.packages('ggplot2')"
-    Rscript -e "install.packages('gutenberg')"
+    Rscript -e "install.packages('gutenbergr')"
     Rscript -e "install.packages('reshape2')"
     Rscript -e "install.packages('stringi')"
     Rscript -e "install.packages('stringr')"
