@@ -1,35 +1,43 @@
 #!/usr/bin/env python
-from torchtext import data
-import torch
-from torch import nn
-import time
-from model import train, RNN
-from vocab import build_vocab
+"""
+Training Utilities
 
-data_path = "/data/sentences.csv"
-n_epochs = 100
-embedding_info = {
-    "vectors": "glove.6B.50d",
-    "vectors_cache": "/data/glove"
-}
-x_train, _, _, vocab = build_data(data_path, **embedding_info)
+It's standard to wrap up some of the details of pytorch model training in some
+external utilities.
+"""
+import torch.nn as nn
 
+def train(model, iterator, optimizer, loss_fun, embedding, device):
+    """
+    Train Model for an Epoch
 
-train_iter = data.Iterator(x_train, batch_size=32, sort_key = lambda x: len(x.Text))
-embedding = nn.Embedding(len(vocab), 50)
-embedding.weight.data.copy_(vocab.vectors)
-model = RNN(50, 100, 1, 3, 0.2)
-optimizer = torch.optim.Adam(model.parameters())
-criterion = nn.BCEWithLogitsLoss()
+    :param model: The model to update, a nn.Module class.
+    :param iterator: A torch data iterator, from which training examples will
+      be drawn.
+    :param optimizer: The object that updates weights over iterations.
+    :param loss_fun: A function that computes a loss, to guide weight updates.
+    :param embedding: An nn.Embedding that can be used to convert a text
+      sentence into its numerical equivalent.
+    :param device: Either the CPU or GPU device on which to put the model when
+      making updates.
+    :return: A tuple with the following elements,
+      - model: The model, with updated parameters.
+      - epoch_loss: The average loss over the epoch
+    """
+    epoch_loss = 0
+    model.train()
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = model.to(device)
-criterion = criterion.to(device)
+    for elem in iterator:
+        optimizer.zero_grad()
+        x = embedding(elem.sentence)
+        x = x.to(device)
+        y = elem.author.float().to(device)
 
-for epoch in range(n_epochs):
-    start_time = time.time()
-    train_loss = train(model, train_iter, optimizer, criterion, embedding, device)
-    end_time = time.time()
+        _, _, y_hat = model(x)
+        loss = criterion(y_hat.squeeze(1), y)
 
-    torch.save(model.state_dict(), 'tut2-{}-model.pt'.format(epoch))
-    print("\tTrain Loss: {}".format(train_loss))
+        loss.backward()
+        optimizer.step()
+        epoch_loss += loss.item()
+
+    return model, epoch_loss / len(iterator)
