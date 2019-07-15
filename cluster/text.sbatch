@@ -22,4 +22,4 @@
 #SBATCH --mail-user=sankaran.kris@gmail.com
 
 module load singularity
-singularity shell --nv --bind /scratch/sankarak/data:data,/home/sankarak/text_example:/home /scratch/sankarak/images/text.img /home/cluster/main.sh
+singularity shell --nv --bind /scratch/sankarak/data:/data,/home/sankarak/text_example:/home /scratch/sankarak/images/text.img /home/cluster/main.sh
